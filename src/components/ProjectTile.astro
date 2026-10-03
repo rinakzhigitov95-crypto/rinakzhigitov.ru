@@ -23,7 +23,7 @@ const d = project.data;
   <span class="tile-bottom">
     <span class="tile-title">{d.title}</span>
     <span class="tile-sub">{d.subtitle}</span>
-    <span class="tile-meta">{d.company} · {d.period}</span>
+    <span class="tile-meta">{d.company}</span>
   </span>
 </a>
 
@@ -116,9 +116,13 @@ const d = project.data;
     max-width: 36ch;
   }
   .tile-meta {
+    justify-self: start;
+    margin-top: 8px;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    border: 1px solid currentColor;
     font-size: var(--fs-0);
-    opacity: 0.6;
-    margin-top: 6px;
+    opacity: 0.7;
   }
   @media (max-width: 860px) {
     .is-featured {

@@ -19,34 +19,19 @@ const { Content } = await render(project);
 const title = `${d.title} — проект Рината Акжигитова`;
 ---
 
-<Base title={title} description={`${d.subtitle}. ${d.company}, ${d.period}. ${d.metric} — ${d.metricLabel}.`} compactHeader>
+<Base title={title} description={`${d.subtitle}. ${d.company}. ${d.metric} — ${d.metricLabel}.`} compactHeader>
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
 
   <article class="case">
     <header class="case-head container">
       <a class="back" href="/#projects">Все проекты</a>
-      <p class="case-kicker">{d.company} · {d.industry} · {d.period}</p>
+      <ul class="chips" aria-label="Компания и отрасль">
+        <li>{d.company}</li>
+        <li>{d.industry}</li>
+      </ul>
       <h1>{d.title}</h1>
       <p class="lead case-sub">{d.subtitle}</p>
-
-      <dl class="meta">
-        <div>
-          <dt>Роль</dt>
-          <dd>{d.role}</dd>
-        </div>
-        {
-          d.team && (
-            <div>
-              <dt>Команда</dt>
-              <dd>{d.team}</dd>
-            </div>
-          )
-        }
-        <div>
-          <dt>Теги</dt>
-          <dd>{d.tags.join(', ')}</dd>
-        </div>
-      </dl>
+      <p class="role"><span>Роль</span>{d.role}</p>
     </header>
 
     <section class={`results tone-${d.tone}`} aria-label="Результаты">
@@ -124,16 +109,37 @@ const title = `${d.title} — проект Рината Акжигитова`;
     text-decoration: none;
     color: var(--ink-2);
   }
-  .back::before {
-    content: '←';
-    margin-right: 0.4em;
-  }
   .back:hover {
     color: var(--ink);
   }
-  .case-kicker {
+  .chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+  .chips li {
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-2);
+    font-size: var(--fs-0);
+  }
+  .role {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    margin-top: 32px;
+    color: var(--ink);
+    max-width: 48ch;
+  }
+  .role span {
     color: var(--ink-3);
-    margin-bottom: 16px;
+    font-size: var(--fs-0);
+    flex-basis: 100%;
   }
   .case-head h1 {
     font-size: clamp(2.25rem, 4.8vw, 3.75rem);
@@ -142,24 +148,6 @@ const title = `${d.title} — проект Рината Акжигитова`;
   .case-sub {
     margin-top: 20px;
     max-width: 36em;
-  }
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px 48px;
-    margin: 40px 0 0;
-  }
-  .meta div {
-    display: grid;
-    gap: 4px;
-  }
-  dt {
-    font-size: var(--fs-0);
-    color: var(--ink-3);
-  }
-  dd {
-    margin: 0;
-    max-width: 32ch;
   }
   .results {
     background: var(--ink-2);
