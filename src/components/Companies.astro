@@ -1,0 +1,71 @@
+---
+import { companies } from '../data/site';
+// Дублируем список, чтобы лента была бесшовной
+const loop = [...companies, ...companies];
+---
+
+<section class="companies section" aria-labelledby="companies-h">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2 id="companies-h">Компании, с которыми работал</h2>
+      <p>Работодатели, клиенты и партнёры — от банков и телекома до университетов и госсектора.</p>
+    </div>
+  </div>
+  <div class="marquee" data-reveal>
+    <ul class="track" data-marquee>
+      {
+        loop.map((c, i) => (
+          <li aria-hidden={i >= companies.length ? 'true' : undefined}>
+            <img src={`/logos/${c.file}`} alt={c.name} title={c.name} loading="lazy" decoding="async" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .track {
+    display: flex;
+    align-items: center;
+    gap: clamp(40px, 5vw, 72px);
+    width: max-content;
+    margin: 0;
+    padding: 12px 0;
+    list-style: none;
+    will-change: transform;
+  }
+  .track img {
+    height: 34px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    filter: grayscale(1) contrast(1.1);
+    opacity: 0.72;
+    transition: filter 0.4s var(--ease), opacity 0.4s var(--ease);
+  }
+  .track li:hover img {
+    filter: none;
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee {
+      mask-image: none;
+      -webkit-mask-image: none;
+    }
+    .track {
+      flex-wrap: wrap;
+      justify-content: center;
+      width: auto;
+      padding-inline: var(--gutter);
+    }
+    .track li[aria-hidden] {
+      display: none;
+    }
+  }
+</style>

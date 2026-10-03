@@ -1,0 +1,131 @@
+---
+import { skills } from '../data/site';
+---
+
+<section class="skills section" id="skills">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>Компетенции</h2>
+      <p>Пять областей, в которых я закрываю задачу целиком — от исследования до релиза.</p>
+    </div>
+    <div class="skill-list">
+      {
+        skills.map((s, i) => (
+          <details class="skill" data-reveal style={`--i:${i}`} open={i === 0}>
+            <summary>
+              <span class="skill-title">{s.title}</span>
+              <span class="skill-summary">{s.summary}</span>
+              <span class="skill-icon" aria-hidden="true" />
+            </summary>
+            <ul>
+              {s.items.map((it) => (
+                <li>{it}</li>
+              ))}
+            </ul>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skill-list {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .skill {
+    border-bottom: 1px solid var(--line);
+  }
+  summary {
+    display: grid;
+    grid-template-columns: minmax(200px, 0.9fr) 1.6fr auto;
+    gap: 16px 32px;
+    align-items: baseline;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .skill-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-2);
+    letter-spacing: -0.01em;
+  }
+  .skill-summary {
+    color: var(--ink-2);
+  }
+  .skill-icon {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    align-self: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    transition: background-color 0.3s var(--ease), transform 0.4s var(--ease);
+  }
+  .skill-icon::before,
+  .skill-icon::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 12px;
+    height: 1.5px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s var(--ease), background-color 0.3s;
+  }
+  .skill-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .skill[open] .skill-icon {
+    background: var(--ink);
+  }
+  .skill[open] .skill-icon::before,
+  .skill[open] .skill-icon::after {
+    background: var(--on-dark);
+  }
+  .skill[open] .skill-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  .skill ul {
+    margin: 0;
+    padding: 0 0 28px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 32px;
+    max-width: 60ch;
+    grid-column: 2;
+  }
+  .skill li {
+    position: relative;
+    padding-left: 18px;
+    color: var(--ink-2);
+  }
+  .skill li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--grad);
+  }
+  @media (max-width: 860px) {
+    summary {
+      grid-template-columns: 1fr auto;
+    }
+    .skill-summary {
+      grid-column: 1 / -1;
+      order: 3;
+    }
+    .skill ul {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

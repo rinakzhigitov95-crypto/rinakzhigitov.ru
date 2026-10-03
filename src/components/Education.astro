@@ -1,0 +1,88 @@
+---
+import { education, courses } from '../data/site';
+---
+
+<section class="edu section container" id="education">
+  <div class="section-head" data-reveal>
+    <h2>Образование и курсы</h2>
+  </div>
+  <div class="edu-grid">
+    <div data-reveal>
+      <h3>Высшее образование</h3>
+      <ul class="list">
+        {
+          education.map((e) => (
+            <li>
+              <span class="year">{e.year}</span>
+              <span>
+                <b>{e.title}</b>
+                <span class="place">{e.place}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div data-reveal style="--i:1">
+      <h3>Повышение квалификации</h3>
+      <ul class="list">
+        {
+          courses.map((c) => (
+            <li>
+              <span class="year">{c.year}</span>
+              <span>
+                <b>{c.title}</b>
+                <span class="place">{c.place}</span>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 80px);
+  }
+  h3 {
+    font-size: var(--fs-2);
+    margin-bottom: 20px;
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+  }
+  .list li {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .list li > span:last-child {
+    display: grid;
+    gap: 2px;
+  }
+  .year {
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .list b {
+    font-weight: 500;
+  }
+  .place {
+    color: var(--ink-2);
+    font-size: var(--fs-0);
+  }
+  @media (max-width: 860px) {
+    .edu-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

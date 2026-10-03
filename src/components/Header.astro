@@ -1,0 +1,121 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const isHome = Astro.url.pathname === '/';
+const nav = [
+  { href: '/#projects', label: 'Проекты' },
+  { href: '/#about', label: 'Обо мне' },
+  { href: '/#skills', label: 'Компетенции' },
+  { href: '/#contacts', label: 'Контакты' },
+];
+---
+
+<header class:list={['header', { 'is-compact': compact }]} data-header>
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="На главную">
+      <span class="brand-mark" aria-hidden="true">РА</span>
+      <span class="brand-name">Ринат Акжигитов</span>
+    </a>
+    <nav class="nav" aria-label="Разделы сайта">
+      {nav.map((n) => <a href={isHome ? n.href.replace('/#', '#') : n.href}>{n.label}</a>)}
+    </nav>
+    <a class="btn btn-primary header-cta" href={site.telegram} target="_blank" rel="noopener">Написать</a>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    padding-block: 18px;
+    transition:
+      padding 0.4s var(--ease),
+      background-color 0.4s var(--ease),
+      box-shadow 0.4s var(--ease);
+  }
+  .header.is-compact {
+    padding-block: 10px;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .brand-mark {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--grad);
+    color: var(--on-dark);
+    font: 600 0.8rem var(--font-display);
+  }
+  .brand-name {
+    white-space: nowrap;
+    transition: opacity 0.3s var(--ease);
+  }
+  .nav {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .nav a {
+    padding: 8px 12px;
+    border-radius: var(--r-pill);
+    color: var(--ink-2);
+    text-decoration: none;
+    font-size: var(--fs-0);
+    transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .nav a:hover {
+    background: color-mix(in srgb, var(--ink-2) 10%, transparent);
+    color: var(--ink);
+  }
+  .header-cta {
+    padding: 0.65em 1.2em;
+    font-size: var(--fs-0);
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.35s var(--ease),
+      background-color 0.25s var(--ease);
+  }
+  .header.is-compact .header-cta {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  @media (max-width: 720px) {
+    .nav {
+      display: none;
+    }
+    .header-cta {
+      margin-left: auto;
+    }
+    .header.is-compact .brand-name {
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+    }
+  }
+</style>

@@ -1,0 +1,252 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+  return projects.map((p, i) => ({
+    params: { slug: p.id },
+    props: { project: p, next: projects[(i + 1) % projects.length] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const title = `${d.title} — проект Рината Акжигитова`;
+---
+
+<Base title={title} description={`${d.subtitle}. ${d.company}, ${d.period}. ${d.metric} — ${d.metricLabel}.`} compactHeader>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+  <article class="case">
+    <header class="case-head container">
+      <a class="back" href="/#projects">Все проекты</a>
+      <p class="case-kicker">{d.company} · {d.industry} · {d.period}</p>
+      <h1>{d.title}</h1>
+      <p class="lead case-sub">{d.subtitle}</p>
+
+      <dl class="meta">
+        <div>
+          <dt>Роль</dt>
+          <dd>{d.role}</dd>
+        </div>
+        {
+          d.team && (
+            <div>
+              <dt>Команда</dt>
+              <dd>{d.team}</dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Теги</dt>
+          <dd>{d.tags.join(', ')}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <section class={`results tone-${d.tone}`} aria-label="Результаты">
+      <div class="container results-inner">
+        {
+          d.results.map((r, i) => (
+            <div class="result" data-reveal style={`--i:${i}`}>
+              <b>{r.value}</b>
+              <span>{r.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <div class="container case-body">
+      <div class="prose">
+        <Content />
+      </div>
+
+      {
+        d.artifacts.length > 0 && (
+          <section class="artifacts" aria-label="Артефакты">
+            <h2>Артефакты</h2>
+            <div class="artifact-grid">
+              {d.artifacts.map((a) => (
+                <figure>
+                  <img src={a.src} alt={a.alt} loading="lazy" decoding="async" />
+                  {a.caption && <figcaption class="small">{a.caption}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+
+    <footer class="case-next">
+      <div class="container">
+        <p class="small">Следующий проект</p>
+        <a class="next-link" href={`/projects/${next.id}/`}>
+          <span class="next-title">{next.data.title}</span>
+          <span class="next-sub">{next.data.subtitle}</span>
+        </a>
+        <a class="btn btn-ghost" href={site.telegram} target="_blank" rel="noopener">Обсудить похожую задачу</a>
+      </div>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 60;
+    background: transparent;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    background: var(--grad);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .case-head {
+    padding-top: 128px;
+    padding-bottom: 56px;
+    max-width: 880px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: var(--fs-0);
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .back::before {
+    content: '←';
+    margin-right: 0.4em;
+  }
+  .back:hover {
+    color: var(--ink);
+  }
+  .case-kicker {
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+  .case-head h1 {
+    font-size: clamp(2.25rem, 4.8vw, 3.75rem);
+    max-width: 18ch;
+  }
+  .case-sub {
+    margin-top: 20px;
+    max-width: 36em;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 48px;
+    margin: 40px 0 0;
+  }
+  .meta div {
+    display: grid;
+    gap: 4px;
+  }
+  dt {
+    font-size: var(--fs-0);
+    color: var(--ink-3);
+  }
+  dd {
+    margin: 0;
+    max-width: 32ch;
+  }
+  .results {
+    background: var(--ink-2);
+    color: var(--on-dark);
+  }
+  .results.tone-grad,
+  .results.tone-soft {
+    background: var(--grad);
+    color: var(--ink);
+  }
+  .results.tone-dark {
+    background: var(--dark);
+  }
+  .results-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px 48px;
+    padding-block: 48px;
+  }
+  .result {
+    display: grid;
+    gap: 8px;
+  }
+  .result b {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .result span {
+    opacity: 0.85;
+    max-width: 30ch;
+  }
+  .case-body {
+    padding-block: 64px 96px;
+    max-width: 880px;
+  }
+  .artifacts {
+    margin-top: 72px;
+  }
+  .artifacts h2 {
+    font-size: var(--fs-3);
+    margin-bottom: 24px;
+  }
+  .artifact-grid {
+    display: grid;
+    gap: 24px;
+  }
+  .artifact-grid figure {
+    margin: 0;
+  }
+  .artifact-grid img {
+    border-radius: var(--r-card);
+    border: 1px solid var(--line);
+  }
+  figcaption {
+    margin-top: 8px;
+  }
+  .case-next {
+    border-top: 1px solid var(--line);
+    padding-block: 64px;
+  }
+  .case-next .container {
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+  }
+  .next-link {
+    display: grid;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .next-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-4);
+    letter-spacing: -0.02em;
+  }
+  .next-link:hover .next-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+  .next-sub {
+    color: var(--ink-2);
+  }
+</style>

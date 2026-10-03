@@ -1,0 +1,64 @@
+---
+import { offwork } from '../data/site';
+---
+
+<section class="offwork section" id="offwork">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <h2>Вне работы</h2>
+      <p>То, что не попадает в резюме, но многое объясняет.</p>
+    </div>
+    <ul class="cards">
+      {
+        offwork.map((o, i) => (
+          <li data-reveal style={`--i:${i}`}>
+            {o.value && <b>{o.value}</b>}
+            <span>{o.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .offwork {
+    background: var(--surface);
+  }
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .cards li {
+    display: grid;
+    align-content: end;
+    gap: 8px;
+    min-height: 150px;
+    padding: 24px;
+    border-radius: var(--r-card);
+    background: var(--bg);
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .cards b {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-3);
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  @media (max-width: 860px) {
+    .cards {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

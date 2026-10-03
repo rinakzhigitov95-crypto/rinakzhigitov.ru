@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import photo from '../assets/photo/hero.jpg';
+---
+
+<section class="hero container" data-hero>
+  <div class="hero-text">
+    <p class="hero-name">{site.name}, {site.role}</p>
+    <h1>{site.headline}</h1>
+    <p class="lead hero-lead">{site.lead}</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#projects">Смотреть проекты</a>
+      <a class="btn btn-ghost" href={site.telegram} target="_blank" rel="noopener">Написать в Telegram</a>
+    </div>
+  </div>
+
+  <div class="hero-photo" data-parallax="0.08">
+    <div class="aura" aria-hidden="true"></div>
+    <div class="duo">
+      <Image src={photo} alt="Ринат Акжигитов" width={760} densities={[1, 2]} loading="eager" format="webp" quality={82} />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+    min-height: 100svh;
+    padding-block: 120px 64px;
+  }
+  .hero-name {
+    color: var(--ink-2);
+    margin-bottom: 20px;
+  }
+  .hero-lead {
+    margin-top: 28px;
+    max-width: 30em;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+  }
+  .hero-photo {
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .aura {
+    position: absolute;
+    inset: 0 -10%;
+    background: var(--grad);
+    filter: blur(70px);
+    opacity: 0.3;
+    border-radius: 50%;
+    animation: breathe 16s ease-in-out infinite alternate;
+  }
+  @keyframes breathe {
+    from {
+      transform: scale(0.92) rotate(-6deg) translate(-2%, 2%);
+    }
+    to {
+      transform: scale(1.06) rotate(8deg) translate(3%, -3%);
+    }
+  }
+  /* Дуотон: фон — градиент, фото отдаёт только светотень */
+  .duo {
+    position: relative;
+    width: min(100%, 460px);
+    background: var(--grad);
+    border-radius: var(--r-tile);
+    overflow: hidden;
+  }
+  .duo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: bottom;
+    mix-blend-mode: luminosity;
+    filter: grayscale(1) contrast(1.05) brightness(1.05);
+  }
+  @media (max-width: 860px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: 96px;
+    }
+    .hero-photo {
+      order: -1;
+    }
+    .duo {
+      width: min(100%, 340px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aura {
+      animation: none;
+    }
+  }
+</style>

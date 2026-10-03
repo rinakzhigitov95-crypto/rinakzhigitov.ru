@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rinakzhigitov.ru/sitemap-index.xml

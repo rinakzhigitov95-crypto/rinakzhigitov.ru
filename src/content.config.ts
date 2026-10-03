@@ -1,0 +1,28 @@
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+// Выполненные проекты: один .md — один кейс
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(), // короткое название-суть для плитки, до 40 знаков
+    subtitle: z.string(), // что это за проект, одна строка
+    metric: z.string(), // главная цифра для плитки: «15 → 24 %»
+    metricLabel: z.string(), // подпись к цифре: «конверсия пилота в покупку»
+    company: z.string(), // МТС Линк / Т-Банк / Aviasales
+    industry: z.string(), // UCaaS / Финтех / Тревел / EdTech
+    period: z.string(), // «2026» или «2025–2026»
+    role: z.string(),
+    team: z.string().optional(),
+    tags: z.array(z.string()),
+    order: z.number(),
+    tone: z.enum(['grad', 'light', 'dark', 'soft']).default('light'),
+    results: z.array(z.object({ value: z.string(), label: z.string() })),
+    artifacts: z
+      .array(z.object({ src: z.string(), alt: z.string(), caption: z.string().optional() }))
+      .default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { projects };

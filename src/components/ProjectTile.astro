@@ -1,0 +1,132 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+  featured?: boolean;
+}
+const { project, index, featured = false } = Astro.props;
+const d = project.data;
+---
+
+<a
+  class:list={['tile', `tile-${d.tone}`, { 'is-featured': featured }]}
+  href={`/projects/${project.id}/`}
+  data-reveal
+  style={`--i:${index % 3}`}
+>
+  <span class="tile-top">
+    <span class="tile-metric">{d.metric}</span>
+    <span class="tile-metric-label">{d.metricLabel}</span>
+  </span>
+  <span class="tile-bottom">
+    <span class="tile-title">{d.title}</span>
+    <span class="tile-sub">{d.subtitle}</span>
+    <span class="tile-meta">{d.company} · {d.period}</span>
+  </span>
+</a>
+
+<style>
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    min-height: 320px;
+    padding: 28px;
+    border-radius: var(--r-tile);
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transition: transform 0.7s var(--ease);
+  }
+  .tile:hover::before {
+    transform: scale(1.04);
+  }
+  .tile-grad::before {
+    background: var(--grad);
+  }
+  .tile-light::before {
+    background: var(--surface);
+  }
+  .tile-soft::before {
+    background: var(--grad-soft);
+  }
+  .tile-dark::before {
+    background: var(--ink-2);
+  }
+  .tile-dark,
+  .tile-grad {
+    color: var(--on-dark);
+  }
+  .tile-grad {
+    color: var(--ink);
+  }
+  .is-featured {
+    grid-column: span 2;
+    min-height: 380px;
+  }
+  .tile-top {
+    display: grid;
+    gap: 4px;
+  }
+  .tile-metric {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.6rem, 2.4vw, var(--fs-4));
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .is-featured .tile-metric {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+  .tile-metric-label {
+    font-size: var(--fs-0);
+    opacity: 0.75;
+  }
+  .tile-bottom {
+    display: grid;
+    gap: 8px;
+  }
+  .tile-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-2);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .is-featured .tile-title {
+    font-size: var(--fs-3);
+    max-width: 18ch;
+  }
+  .tile-sub {
+    font-size: var(--fs-0);
+    opacity: 0.8;
+    max-width: 36ch;
+  }
+  .tile-meta {
+    font-size: var(--fs-0);
+    opacity: 0.6;
+    margin-top: 6px;
+  }
+  @media (max-width: 860px) {
+    .is-featured {
+      grid-column: auto;
+      min-height: 320px;
+    }
+    .tile {
+      min-height: 260px;
+    }
+  }
+</style>

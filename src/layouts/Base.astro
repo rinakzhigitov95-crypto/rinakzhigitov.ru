@@ -1,0 +1,65 @@
+---
+import '@fontsource-variable/golos-text';
+import '@fontsource-variable/unbounded';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  compactHeader?: boolean;
+}
+
+const {
+  title,
+  description = 'Ринат Акжигитов — продакт-менеджер и руководитель клиентского опыта в B2B: финтех, UCaaS, edtech, тревел. Выполненные проекты, компетенции, контакты.',
+  ogImage = '/og.jpg',
+  compactHeader = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, site.url).toString()} />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#02110c" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Ринат Акжигитов',
+      alternateName: 'Rinat Akzhigitov',
+      jobTitle: 'Продакт-менеджер',
+      url: site.url,
+      email: `mailto:${site.email}`,
+      sameAs: [site.telegram, site.setka],
+      worksFor: { '@type': 'Organization', name: 'МТС Линк' },
+    })} />
+  </head>
+  <body>
+    <Header compact={compactHeader} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script src="../scripts/motion.ts"></script>
+  </body>
+</html>

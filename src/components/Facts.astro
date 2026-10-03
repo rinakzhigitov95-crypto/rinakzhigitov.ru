@@ -1,0 +1,51 @@
+---
+import { facts } from '../data/site';
+---
+
+<section class="facts container" aria-label="Ключевые цифры">
+  {
+    facts.map((f, i) => (
+      <p data-reveal style={`--i:${i}`}>
+        <b data-count={f.value} data-prefix={f.prefix ?? ''} data-suffix={f.suffix ?? ''}>
+          {f.prefix ?? ''}0{f.suffix ?? ''}
+        </b>
+        {f.label}
+      </p>
+    ))
+  }
+</section>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    border-top: 1px solid var(--line);
+    padding-block: 40px 96px;
+  }
+  .facts p {
+    color: var(--ink-2);
+    line-height: 1.4;
+  }
+  .facts b {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.5rem, 2.6vw, var(--fs-4));
+    white-space: nowrap;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 860px) {
+    .facts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
