@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import logo from '../assets/logo.svg?raw';
 
 interface Props {
   compact?: boolean;
@@ -17,7 +18,7 @@ const nav = [
 <header class:list={['header', { 'is-compact': compact }]} data-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="На главную">
-      <span class="brand-mark" aria-hidden="true">РА</span>
+      <span class="brand-mark" aria-hidden="true" set:html={logo} />
       <span class="brand-name">Ринат Акжигитов</span>
     </a>
     <nav class="nav" aria-label="Разделы сайта">
@@ -59,14 +60,14 @@ const nav = [
     font-weight: 500;
   }
   .brand-mark {
-    display: grid;
-    place-items: center;
+    display: block;
     width: 36px;
     height: 36px;
-    border-radius: 10px;
-    background: var(--grad);
-    color: var(--on-dark);
-    font: 600 0.8rem var(--font-display);
+  }
+  .brand-mark :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   .brand-name {
     white-space: nowrap;
