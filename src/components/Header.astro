@@ -7,9 +7,9 @@ interface Props {
 const { compact = false } = Astro.props;
 const isHome = Astro.url.pathname === '/';
 const nav = [
+  { href: '/#skills', label: 'Компетенции' },
   { href: '/#projects', label: 'Проекты' },
   { href: '/#about', label: 'Обо мне' },
-  { href: '/#skills', label: 'Компетенции' },
   { href: '/#contacts', label: 'Контакты' },
 ];
 ---

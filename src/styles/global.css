@@ -160,7 +160,7 @@ img {
 
 /* Секции и заголовки */
 .section {
-  padding-block: clamp(64px, 9vw, 128px);
+  padding-block: clamp(48px, 6vw, 88px);
 }
 .section-head {
   display: flex;

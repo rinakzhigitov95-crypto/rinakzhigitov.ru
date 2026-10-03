@@ -2,76 +2,125 @@
 import { education, courses } from '../data/site';
 ---
 
-<section class="edu section container" id="education">
-  <div class="section-head" data-reveal>
-    <h2>Образование и курсы</h2>
-  </div>
-  <div class="edu-grid">
-    <div data-reveal>
-      <h3>Высшее образование</h3>
-      <ul class="list">
-        {
-          education.map((e) => (
-            <li>
-              <span class="year">{e.year}</span>
-              <span>
+<section class="edu container" id="education">
+  <details class="edu-details" data-reveal>
+    <summary>
+      <h2>Образование и курсы</h2>
+      <span class="edu-hint">
+        <span class="small">{education.length} диплома, {courses.length} программ</span>
+        <span class="edu-icon" aria-hidden="true"></span>
+      </span>
+    </summary>
+
+    <div class="edu-grid">
+      <div>
+        <h3>Высшее образование</h3>
+        <ul class="list">
+          {
+            education.map((e) => (
+              <li>
                 <b>{e.title}</b>
                 <span class="place">{e.place}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <div data-reveal style="--i:1">
-      <h3>Повышение квалификации</h3>
-      <ul class="list">
-        {
-          courses.map((c) => (
-            <li>
-              <span class="year">{c.year}</span>
-              <span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div>
+        <h3>Повышение квалификации</h3>
+        <ul class="list">
+          {
+            courses.map((c) => (
+              <li>
                 <b>{c.title}</b>
                 <span class="place">{c.place}</span>
-              </span>
-            </li>
-          ))
-        }
-      </ul>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
-  </div>
+  </details>
 </section>
 
 <style>
+  .edu {
+    padding-block: 8px;
+  }
+  .edu-details {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 36px 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .edu-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+  }
+  .edu-icon {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ink);
+    transition: background-color 0.3s var(--ease);
+  }
+  .edu-icon::before,
+  .edu-icon::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 14px;
+    height: 1.5px;
+    background: var(--ink);
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s var(--ease), background-color 0.3s;
+  }
+  .edu-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .edu-details[open] .edu-icon {
+    background: var(--ink);
+  }
+  .edu-details[open] .edu-icon::before,
+  .edu-details[open] .edu-icon::after {
+    background: var(--on-dark);
+  }
+  .edu-details[open] .edu-icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
   .edu-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 5vw, 80px);
+    padding-bottom: 48px;
   }
   h3 {
     font-size: var(--fs-2);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   .list {
     list-style: none;
     margin: 0;
     padding: 0;
-    display: grid;
   }
   .list li {
     display: grid;
-    grid-template-columns: 64px 1fr;
-    gap: 16px;
-    padding: 14px 0;
-    border-top: 1px solid var(--line);
-  }
-  .list li > span:last-child {
-    display: grid;
     gap: 2px;
-  }
-  .year {
-    color: var(--ink-3);
-    font-variant-numeric: tabular-nums;
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
   }
   .list b {
     font-weight: 500;
@@ -83,6 +132,9 @@ import { education, courses } from '../data/site';
   @media (max-width: 860px) {
     .edu-grid {
       grid-template-columns: 1fr;
+    }
+    .edu-hint .small {
+      display: none;
     }
   }
 </style>

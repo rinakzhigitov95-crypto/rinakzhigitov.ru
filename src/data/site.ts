@@ -29,7 +29,7 @@ export const languages = [
   { name: 'Русский', level: 'родной' },
   { name: 'Татарский', level: 'C1' },
   { name: 'Английский', level: 'B2' },
-  { name: 'Испанский', level: 'A1' },
+  { name: 'Испанский', level: 'A2' },
 ];
 
 export const skills = [
@@ -112,27 +112,28 @@ export const companies = [
 
 export const education = [
   {
-    year: '2020',
+    title: 'Mini MBA Professional',
+    place: 'Management & Marketing Universal Business School, Эдинбург',
+  },
+  {
     title: 'Магистр, менеджмент программ и проектов',
     place: 'Московский педагогический государственный университет',
   },
   {
-    year: '2018',
     title: 'Бакалавр, политология экономических процессов',
     place: 'Финансовый университет при Правительстве РФ',
   },
 ];
 
 export const courses = [
-  { year: '2025', title: 'ML-инженер', place: 'Karpov.Courses' },
-  { year: '2024', title: 'OKR Strategist', place: 'Neogenda' },
-  { year: '2022', title: 'Senior Product Manager и CPO', place: 'ProductStar' },
-  { year: '2021', title: 'Школа технологов', place: 'Тинькофф' },
-  { year: '2021', title: 'Agile и Scrum в работе над продуктами', place: 'ScrumTrek, ТГУ' },
-  { year: '2020', title: 'Mini MBA Professional', place: 'Management & Marketing Universal Business School, Эдинбург' },
-  { year: '2020', title: 'Эмоциональный интеллект. Основы бизнеса', place: 'НИТУ МИСиС' },
-  { year: '2019', title: 'Коуч', place: 'International Coaching Association' },
-  { year: '2018', title: 'Школа визуального мышления', place: '«Вижу-понимаю»' },
+  { title: 'ML-инженер', place: 'Karpov.Courses' },
+  { title: 'OKR Strategist', place: 'Neogenda' },
+  { title: 'Senior Product Manager и CPO', place: 'ProductStar' },
+  { title: 'Школа технологов', place: 'Тинькофф' },
+  { title: 'Agile и Scrum в работе над продуктами', place: 'ScrumTrek, ТГУ' },
+  { title: 'Эмоциональный интеллект. Основы бизнеса', place: 'НИТУ МИСиС' },
+  { title: 'Коуч', place: 'International Coaching Association' },
+  { title: 'Школа визуального мышления', place: '«Вижу-понимаю»' },
 ];
 
 export const offwork = [

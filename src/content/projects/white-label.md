@@ -1,5 +1,5 @@
 ---
-title: 'Одно приложение — два бренда'
+title: 'White-label версия приложения для партнёра'
 subtitle: 'White-label единого приложения чатов и встреч для партнёрского бренда Vinteo после M&A-сделки'
 metric: '4 платформы'
 metricLabel: 'web, desktop, iOS и Android под брендом партнёра'

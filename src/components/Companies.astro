@@ -6,12 +6,12 @@ const loop = [...companies, ...companies];
 
 <section class="companies section" aria-labelledby="companies-h">
   <div class="container">
-    <div class="section-head" data-reveal>
+    <div class="section-head" data-reveal style="margin-bottom: 24px">
       <h2 id="companies-h">Компании, с которыми работал</h2>
       <p>Работодатели, клиенты и партнёры — от банков и телекома до университетов и госсектора.</p>
     </div>
   </div>
-  <div class="marquee" data-reveal>
+  <div class="marquee">
     <ul class="track" data-marquee>
       {
         loop.map((c, i) => (
@@ -41,9 +41,9 @@ const loop = [...companies, ...companies];
     will-change: transform;
   }
   .track img {
-    height: 34px;
+    height: 40px;
     width: auto;
-    max-width: 180px;
+    max-width: 200px;
     object-fit: contain;
     filter: grayscale(1) contrast(1.1);
     opacity: 0.72;
