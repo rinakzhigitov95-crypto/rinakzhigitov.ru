@@ -1,0 +1,136 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { getArticles, readingTime } from '../../lib/articles';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const articles = (await getArticles()).filter((a) => !a.data.external);
+  return articles.map((a, i) => ({
+    params: { slug: a.id },
+    props: { article: a, next: articles[(i + 1) % articles.length] },
+  }));
+}
+
+const { article, next } = Astro.props;
+const d = article.data;
+const { Content } = await render(article);
+const minutes = readingTime(article.body);
+---
+
+<Base title={`${d.title} — Ринат Акжигитов`} description={d.description} compactHeader>
+  <div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+  <article class="post">
+    <header class="post-head container">
+      <a class="back" href="/articles/">Все статьи и интервью</a>
+      <p class="meta">
+        <span>{minutes} мин чтения</span>
+      </p>
+      <h1>{d.title}</h1>
+      <p class="lead">{d.description}</p>
+      {d.cover && <Image class="cover" src={d.cover} alt="" width={1200} format="webp" quality={82} />}
+    </header>
+
+    <div class="container post-body">
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+
+    <footer class="post-next">
+      <div class="container">
+        {
+          next && next.id !== article.id && (
+            <>
+              <p class="small">Следующая статья</p>
+              <a class="next-link" href={`/articles/${next.id}/`}>
+                <span class="next-title">{next.data.title}</span>
+              </a>
+            </>
+          )
+        }
+        <a class="btn btn-ghost" href={site.telegram} target="_blank" rel="noopener">Обсудить в Telegram</a>
+      </div>
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 3px;
+    z-index: 60;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    background: var(--grad);
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  .post-head {
+    padding-top: 128px;
+    padding-bottom: 24px;
+    max-width: 880px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: var(--fs-0);
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .meta {
+    display: flex;
+    gap: 14px;
+    color: var(--ink-3);
+    font-size: var(--fs-0);
+    margin-bottom: 16px;
+  }
+  .post-head h1 {
+    font-size: clamp(2.125rem, 4.4vw, 3.5rem);
+    max-width: 20ch;
+  }
+  .post-head .lead {
+    margin-top: 20px;
+    max-width: 36em;
+  }
+  .post-head :global(.cover) {
+    margin-top: 40px;
+    border-radius: var(--r-tile);
+    width: 100%;
+    height: auto;
+  }
+  .post-body {
+    padding-block: 40px 96px;
+    max-width: 880px;
+  }
+  .post-next {
+    border-top: 1px solid var(--line);
+    padding-block: 64px;
+  }
+  .post-next .container {
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+  }
+  .next-link {
+    text-decoration: none;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .next-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-4);
+    letter-spacing: -0.02em;
+  }
+  .next-link:hover .next-title {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+</style>

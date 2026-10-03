@@ -26,4 +26,22 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+// Статьи: один .md — одна статья. Раздел на главной и пункт меню появляются, когда есть хотя бы одна
+const articles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/articles' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(), // 1–2 предложения для карточки и поисковиков
+      kind: z.enum(['Статья', 'Интервью', 'Кейс', 'Выступление']).default('Статья'),
+      order: z.number().default(100), // порядок карточек: меньше — выше; новые свои статьи ставить выше внешних
+      date: z.coerce.date().optional(), // можно не указывать, если дата публикации неизвестна
+      source: z.string().optional(), // площадка: «basil education», «РСМ» — для внешних публикаций
+      cover: image().optional(), // картинка в src/content/articles/… рядом со статьёй
+      tags: z.array(z.string()).default([]),
+      external: z.string().url().optional(), // если статья опубликована на другой площадке — ссылка туда
+      draft: z.boolean().default(false),
+    }),
+});
+
+export const collections = { projects, articles };

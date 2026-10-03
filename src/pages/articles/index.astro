@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getArticles } from '../../lib/articles';
+
+const articles = await getArticles();
+---
+
+<Base title="Статьи и интервью — Ринат Акжигитов" description="Статьи, интервью и кейсы Рината Акжигитова о продукте, командах и клиентском опыте." compactHeader>
+  <section class="page container">
+    <a class="back" href="/">На главную</a>
+    <h1>Статьи и интервью</h1>
+    <p class="lead">Публикации о продукте, командах и клиентском опыте — на своей площадке и в изданиях партнёров.</p>
+
+    {
+      articles.length === 0 ? (
+        <p class="empty">Первые публикации скоро появятся.</p>
+      ) : (
+        <div class="grid">
+          {articles.map((a, i) => (
+            <ArticleCard article={a} index={i} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</Base>
+
+<style>
+  .page {
+    padding-top: 128px;
+    padding-bottom: 96px;
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    font-size: var(--fs-0);
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .lead {
+    margin: 20px 0 48px;
+    max-width: 40em;
+  }
+  .empty {
+    color: var(--ink-3);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import { readingTime, articleHref, type Article } from '../lib/articles';
+
+interface Props {
+  article: Article;
+  index?: number;
+}
+const { article: a, index = 0 } = Astro.props;
+const d = a.data;
+const href = articleHref(a);
+const ext = Boolean(d.external);
+const tones = ['grad', 'dark', 'soft'];
+const tone = tones[index % tones.length];
+---
+
+<a class="card" href={href} target={ext ? '_blank' : undefined} rel={ext ? 'noopener' : undefined} data-reveal style={`--i:${index % 3}`}>
+  <span class:list={['cover', `cover-${tone}`]}>
+    {d.cover ? <Image src={d.cover} alt="" width={720} format="webp" quality={78} /> : <span class="kind">{d.kind}</span>}
+  </span>
+  <span class="body">
+    <span class="meta">
+      {d.source && <span>{d.source}</span>}
+      {!ext && <span>{readingTime(a.body)} мин</span>}
+    </span>
+    <span class="title">{d.title}</span>
+    <span class="desc">{d.description}</span>
+  </span>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-radius: var(--r-tile);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    overflow: hidden;
+    transition:
+      transform 0.45s var(--ease),
+      box-shadow 0.45s var(--ease);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -24px rgba(2, 17, 12, 0.35);
+  }
+  .cover {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+  .cover :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cover-grad {
+    background: var(--grad);
+  }
+  .cover-dark {
+    background: var(--ink-2);
+  }
+  .cover-soft {
+    background: var(--grad-soft);
+  }
+  .kind {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: var(--fs-3);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .cover-dark .kind {
+    color: var(--on-dark);
+  }
+  .body {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 22px 24px 26px;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-size: var(--fs-0);
+    color: var(--ink-3);
+  }
+  .title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+  .desc {
+    color: var(--ink-2);
+    font-size: var(--fs-0);
+    line-height: 1.5;
+  }
+</style>

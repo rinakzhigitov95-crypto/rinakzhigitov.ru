@@ -1,0 +1,51 @@
+---
+import { getArticles } from '../lib/articles';
+import ArticleCard from './ArticleCard.astro';
+
+const all = await getArticles();
+const articles = all.slice(0, 3);
+---
+
+{
+  articles.length > 0 && (
+    <section class="articles section container" id="articles">
+      <div class="section-head" data-reveal>
+        <h2>Статьи и интервью</h2>
+        <p>Публикации о продукте, командах и клиентском опыте — на своей площадке и в изданиях партнёров.</p>
+      </div>
+      <div class="grid">
+        {articles.map((a, i) => (
+          <ArticleCard article={a} index={i} />
+        ))}
+      </div>
+      {all.length > 3 && (
+        <div class="more">
+          <a class="btn btn-ghost" href="/articles/">Все статьи и интервью</a>
+        </div>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .more {
+    display: flex;
+    justify-content: center;
+    margin-top: 36px;
+  }
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
