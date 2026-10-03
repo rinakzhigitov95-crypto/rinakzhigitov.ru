@@ -28,7 +28,7 @@ export const about = [
 
 export const languages = [
   { name: 'Русский', level: 'родной' },
-  { name: 'Татарский', level: 'C1' },
+  { name: 'Татарский', level: 'родной' },
   { name: 'Английский', level: 'B2' },
   { name: 'Испанский', level: 'A2' },
 ];
