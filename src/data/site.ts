@@ -12,7 +12,7 @@ export const site = {
 
 export const facts = [
   { value: 10, suffix: ' лет', label: 'в продуктах и клиентском опыте' },
-  { value: 7, suffix: '', label: 'онлайн-продуктов' },
+  { value: 7, suffix: '', label: 'цифровых продуктов' },
   { value: 350, suffix: '+ млн ₽', label: 'выручки в продуктах' },
   { value: 20, suffix: '+', label: 'программ обучения' },
   { value: 10, suffix: '', label: 'интерактивных дашбордов' },
