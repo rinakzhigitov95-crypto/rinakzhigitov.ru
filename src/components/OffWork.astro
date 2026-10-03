@@ -1,7 +1,6 @@
 ---
 import { offwork } from '../data/site';
-// Абстрактные формы для карточек: сфера, гора, кольцо, волна, капля, пилюля
-const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
+import OffWorkIcon from './OffWorkIcon.astro';
 ---
 
 <section class="offwork section" id="offwork">
@@ -15,7 +14,7 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
       {
         offwork.map((o, i) => (
           <li data-reveal style={`--i:${i}`}>
-            <span class={`shape shape-${shapes[i % shapes.length]}`} aria-hidden="true" />
+            <OffWorkIcon name={o.icon} />
             {o.value && <b>{o.value}</b>}
             <span>{o.label}</span>
           </li>
@@ -59,73 +58,6 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
     letter-spacing: -0.02em;
   }
 
-  /* Формы: градиент сайта + внутренняя тень, чтобы читались объёмно */
-  .shape {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 72px;
-    height: 72px;
-    z-index: -1;
-    background: var(--grad);
-    box-shadow:
-      inset -10px -12px 24px rgba(2, 17, 12, 0.28),
-      inset 8px 10px 20px rgba(255, 255, 255, 0.35),
-      0 18px 30px -16px rgba(2, 17, 12, 0.35);
-    transition: transform 0.6s var(--ease);
-  }
-  .cards li:hover .shape {
-    transform: translateY(-6px) rotate(-6deg) scale(1.06);
-  }
-  .shape-sphere {
-    border-radius: 50%;
-  }
-  .shape-mountain {
-    width: 84px;
-    height: 72px;
-    clip-path: polygon(50% 0, 100% 100%, 0 100%);
-    box-shadow: none;
-    background:
-      linear-gradient(160deg, rgba(255, 255, 255, 0.35), transparent 45%),
-      var(--grad);
-  }
-  .shape-ring {
-    border-radius: 50%;
-    background: transparent;
-    box-shadow: none;
-    border: 16px solid transparent;
-    background:
-      linear-gradient(var(--bg), var(--bg)) padding-box,
-      var(--grad) border-box;
-    filter: drop-shadow(0 14px 18px rgba(2, 17, 12, 0.22));
-  }
-  .shape-wave {
-    width: 96px;
-    height: 44px;
-    top: 28px;
-    border-radius: 999px;
-    transform: rotate(-18deg);
-  }
-  .cards li:hover .shape-wave {
-    transform: rotate(-10deg) translateY(-4px) scale(1.05);
-  }
-  .shape-drop {
-    border-radius: 50% 50% 50% 0;
-    transform: rotate(-45deg);
-  }
-  .cards li:hover .shape-drop {
-    transform: rotate(-50deg) translateY(-6px) scale(1.06);
-  }
-  .shape-pill {
-    width: 44px;
-    height: 88px;
-    top: 16px;
-    border-radius: 999px;
-    transform: rotate(22deg);
-  }
-  .cards li:hover .shape-pill {
-    transform: rotate(30deg) translateY(-6px) scale(1.05);
-  }
   @media (max-width: 860px) {
     .cards {
       grid-template-columns: 1fr 1fr;

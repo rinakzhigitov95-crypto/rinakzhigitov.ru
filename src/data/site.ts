@@ -150,10 +150,10 @@ export const courses = [
 ];
 
 export const offwork = [
-  { value: '70+', label: 'регионов России объехал' },
-  { value: '10', label: 'стран мира' },
-  { value: '5 642 м', label: 'покорил Эльбрус — высшую точку Европы, а также Pico Ruivo и Pico do Arieiro на Мадейре' },
-  { value: 'КМС', label: 'по тайскому боксу' },
-  { value: '3 года', label: 'владел сервисом аренды сапбордов: NPS 89 %, LTV 70 %' },
-  { value: '2020', label: 'с этого года — частный инвестор' },
+  { value: '70+', label: 'регионов России объехал', icon: 'russia' },
+  { value: '10', label: 'стран мира', icon: 'plane' },
+  { value: '5 642 м', label: 'покорил Эльбрус — высшую точку Европы, а также Pico Ruivo и Pico do Arieiro на Мадейре', icon: 'mountain' },
+  { value: 'КМС', label: 'по тайскому боксу', icon: 'glove' },
+  { value: '3 года', label: 'владел сервисом аренды сапбордов: NPS 89 %, LTV 70 %', icon: 'surf' },
+  { value: '2020', label: 'с этого года — частный инвестор', icon: 'ruble' },
 ];

@@ -3,7 +3,7 @@ title: 'Опросы NPS и CSAT внутри продукта'
 subtitle: 'Перенос NPS и CSAT из внешнего виджета в приложение на web, desktop и mobile'
 metric: '4 500+'
 metricLabel: 'ответов собрано внутри продукта'
-company: 'МТС Линк'
+company: 'UCaaS-платформа'
 industry: 'UCaaS'
 role: 'Продакт-менеджер, руководитель клиентского опыта'
 order: 8
