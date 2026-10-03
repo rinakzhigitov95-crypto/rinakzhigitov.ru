@@ -25,13 +25,8 @@ const title = `${d.title} — проект Рината Акжигитова`;
   <article class="case">
     <header class="case-head container">
       <a class="back" href="/#projects">Все проекты</a>
-      <ul class="chips" aria-label="Компания и отрасль">
-        <li>{d.company}</li>
-        <li>{d.industry}</li>
-      </ul>
       <h1>{d.title}</h1>
       <p class="lead case-sub">{d.subtitle}</p>
-      <p class="role"><span>Роль</span>{d.role}</p>
     </header>
 
     <section class={`results tone-${d.tone}`} aria-label="Результаты">
@@ -111,35 +106,6 @@ const title = `${d.title} — проект Рината Акжигитова`;
   }
   .back:hover {
     color: var(--ink);
-  }
-  .chips {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 0 0 24px;
-    padding: 0;
-  }
-  .chips li {
-    padding: 6px 14px;
-    border-radius: var(--r-pill);
-    border: 1px solid var(--line);
-    background: var(--surface);
-    color: var(--ink-2);
-    font-size: var(--fs-0);
-  }
-  .role {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-    margin-top: 32px;
-    color: var(--ink);
-    max-width: 48ch;
-  }
-  .role span {
-    color: var(--ink-3);
-    font-size: var(--fs-0);
-    flex-basis: 100%;
   }
   .case-head h1 {
     font-size: clamp(2.25rem, 4.8vw, 3.75rem);
