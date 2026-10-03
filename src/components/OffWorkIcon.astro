@@ -7,7 +7,7 @@ const { name } = Astro.props;
 const id = `g-${name}`;
 ---
 
-<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke={`url(#${id})`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<svg class:list={['icon', { 'icon-wide': name === 'glove' }]} viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke={`url(#${id})`} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
   <defs>
     <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#1a422f" />
@@ -17,10 +17,12 @@ const id = `g-${name}`;
   </defs>
   {name === 'russia' && <path d="M12.4 7.3 L13.4 7.6 L12.8 8.0 L15.1 8.2 L15.6 8.9 L16.7 8.7 L16.8 8.4 L19.2 8.9 L19.5 9.3 L22.0 9.4 L22.0 10.5 L21.7 10.5 L21.9 11.2 L19.8 11.8 L19.7 13.1 L19.0 14.1 L18.8 12.6 L20.0 11.1 L19.4 11.6 L19.0 11.4 L18.7 12.0 L17.0 12.0 L16.6 12.5 L16.1 13.1 L16.9 13.6 L16.8 14.8 L15.6 16.4 L16.1 14.8 L15.6 15.0 L14.8 13.5 L14.3 13.5 L13.9 14.5 L12.6 14.6 L11.4 13.8 L11.2 14.4 L10.5 14.2 L9.9 14.6 L8.9 14.1 L8.5 13.2 L8.0 13.5 L7.5 13.0 L6.5 13.3 L6.5 14.2 L5.1 13.9 L4.7 14.3 L4.7 16.7 L3.3 15.8 L3.7 14.5 L2.6 13.8 L2.0 12.4 L2.6 11.0 L2.2 9.4 L2.6 9.2 L3.8 9.8 L3.5 10.2 L2.8 10.0 L3.3 10.7 L3.3 10.4 L4.2 10.2 L4.1 9.5 L4.5 10.0 L5.5 9.4 L6.3 9.6 L6.4 9.2 L7.4 9.6 L7.2 8.9 L7.6 8.3 L8.0 8.6 L7.9 10.1 L8.3 9.7 L8.2 8.4 L8.4 8.8 L9.1 8.7 L9.0 8.2 L9.8 8.1 L9.8 7.8 Z" stroke-width="1.1" fill={`url(#${id})`} fill-opacity=".18" />}
   {name === 'plane' && (
-    <>
-      <path d="M21 3 3.5 10.2a.6.6 0 0 0 .05 1.12L10 13.5l2.2 6.4a.6.6 0 0 0 1.12.05L21 3Z" />
-      <path d="M21 3 10 13.5" />
-    </>
+    <path
+      d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"
+      transform="rotate(45 12 12)"
+      fill={`url(#${id})`}
+      stroke="none"
+    />
   )}
   {name === 'mountain' && (
     <>
@@ -30,13 +32,17 @@ const id = `g-${name}`;
     </>
   )}
   {name === 'glove' && (
-    <g transform="translate(12 12.5) scale(1.14) translate(-12 -12)">
-      <path d="M3.5 14V9.8A3.8 3.8 0 0 1 7.3 6h.3a3.8 3.8 0 0 1 3.8 3.8V14a2.6 2.6 0 0 1-2.6 2.6H6.1A2.6 2.6 0 0 1 3.5 14Z" />
-      <path d="M3.5 9.7h-.9a1.2 1.2 0 0 0-1.2 1.2v2.2a1.2 1.2 0 0 0 1.2 1.2h.9" />
-      <path d="M8.6 9.6a1.7 1.7 0 0 1 1.8 1.5" />
-      <path d="M20.5 14V9.8A3.8 3.8 0 0 0 16.7 6h-.3a3.8 3.8 0 0 0-3.8 3.8V14a2.6 2.6 0 0 0 2.6 2.6h2.7a2.6 2.6 0 0 0 2.6-2.6Z" />
-      <path d="M20.5 9.7h.9a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-.9" />
-      <path d="M15.4 9.6a1.7 1.7 0 0 0-1.8 1.5" />
+    <g transform="translate(12 12.5) scale(1.08) translate(-12 -12)">
+      <g transform="translate(-0.7 0)">
+        <path d="M3.5 14V9.8A3.8 3.8 0 0 1 7.3 6h.3a3.8 3.8 0 0 1 3.8 3.8V14a2.6 2.6 0 0 1-2.6 2.6H6.1A2.6 2.6 0 0 1 3.5 14Z" />
+        <path d="M3.5 9.7h-.9a1.2 1.2 0 0 0-1.2 1.2v2.2a1.2 1.2 0 0 0 1.2 1.2h.9" />
+        <path d="M8.6 9.6a1.7 1.7 0 0 1 1.8 1.5" />
+      </g>
+      <g transform="translate(0.7 0)">
+        <path d="M20.5 14V9.8A3.8 3.8 0 0 0 16.7 6h-.3a3.8 3.8 0 0 0-3.8 3.8V14a2.6 2.6 0 0 0 2.6 2.6h2.7a2.6 2.6 0 0 0 2.6-2.6Z" />
+        <path d="M20.5 9.7h.9a1.2 1.2 0 0 1 1.2 1.2v2.2a1.2 1.2 0 0 1-1.2 1.2h-.9" />
+        <path d="M15.4 9.6a1.7 1.7 0 0 0-1.8 1.5" />
+      </g>
       <path d="M12 4.6V2.6" />
       <path d="M9.5 5.3 8.6 3.6" />
       <path d="m14.5 5.3.9-1.7" />
@@ -66,6 +72,13 @@ const id = `g-${name}`;
     z-index: -1;
     filter: drop-shadow(0 10px 14px rgba(2, 17, 12, 0.18));
     transition: transform 0.6s var(--ease);
+  }
+  .icon-wide {
+    width: 92px;
+    height: 92px;
+    top: 10px;
+    right: 12px;
+    stroke-width: 1.25;
   }
   :global(.cards li:hover) .icon {
     transform: translateY(-5px) rotate(-4deg) scale(1.05);
