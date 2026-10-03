@@ -62,7 +62,6 @@ if (reduce) {
 /* 3. Параллакс и компактная шапка ------------------------------------- */
 const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
 const header = document.querySelector<HTMLElement>('[data-header]');
-const hero = document.querySelector<HTMLElement>('[data-hero]');
 
 let lastY = window.scrollY;
 let velocity = 0;
@@ -83,8 +82,9 @@ function onFrame() {
     }
   }
 
-  if (header && hero) {
-    header.classList.toggle('is-compact', y > hero.offsetHeight * 0.6);
+  if (header) {
+    // фон и компактный вид — сразу после начала прокрутки
+    header.classList.toggle('is-compact', y > 40);
   }
   ticking = false;
 }
