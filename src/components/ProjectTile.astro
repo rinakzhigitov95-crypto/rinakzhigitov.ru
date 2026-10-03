@@ -23,6 +23,7 @@ const d = project.data;
   <span class="tile-bottom">
     <span class="tile-title">{d.title}</span>
     <span class="tile-sub">{d.subtitle}</span>
+    <span class="tile-cta">Открыть проект</span>
   </span>
 </a>
 
@@ -40,6 +41,9 @@ const d = project.data;
     text-decoration: none;
     overflow: hidden;
     isolation: isolate;
+    transition:
+      transform 0.45s var(--ease),
+      box-shadow 0.45s var(--ease);
   }
   .tile::before {
     content: '';
@@ -48,8 +52,42 @@ const d = project.data;
     z-index: -1;
     transition: transform 0.7s var(--ease);
   }
+  .tile:hover,
+  .tile:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -20px rgba(0, 0, 0, 0.55);
+  }
   .tile:hover::before {
     transform: scale(1.04);
+  }
+  /* Явная подсказка, что плитка кликабельна */
+  .tile-cta {
+    justify-self: start;
+    margin-top: 14px;
+    padding: 8px 14px;
+    border-radius: var(--r-pill);
+    border: 1.5px solid currentColor;
+    font: 500 var(--fs-0) / 1 var(--font-text);
+    opacity: 0.85;
+    transition:
+      background-color 0.3s var(--ease),
+      color 0.3s var(--ease),
+      opacity 0.3s var(--ease);
+  }
+  .tile:hover .tile-cta {
+    opacity: 1;
+  }
+  .tile-light:hover .tile-cta,
+  .tile-grad:hover .tile-cta,
+  .tile-soft:hover .tile-cta {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--on-dark);
+  }
+  .tile-dark:hover .tile-cta {
+    background: var(--on-dark);
+    border-color: var(--on-dark);
+    color: var(--ink);
   }
   .tile-grad::before {
     background: var(--grad);

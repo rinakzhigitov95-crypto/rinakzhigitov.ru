@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { offwork } from '../data/site';
+import mountains from '../assets/photo/offwork-mountains.jpg';
 // Абстрактные формы для карточек: сфера, гора, кольцо, волна, капля, пилюля
 const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
 ---
@@ -13,8 +15,12 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
     <ul class="cards">
       {
         offwork.map((o, i) => (
-          <li data-reveal style={`--i:${i}`}>
-            <span class={`shape shape-${shapes[i % shapes.length]}`} aria-hidden="true" />
+          <li data-reveal style={`--i:${i}`} class:list={{ 'is-photo': 'photo' in o }}>
+            {'photo' in o ? (
+              <Image class="photo" src={mountains} alt="Ринат в горах, на фоне горного озера" width={900} densities={[1, 2]} format="webp" quality={78} />
+            ) : (
+              <span class={`shape shape-${shapes[i % shapes.length]}`} aria-hidden="true" />
+            )}
             {o.value && <b>{o.value}</b>}
             <span>{o.label}</span>
           </li>
@@ -56,6 +62,34 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
     font-size: var(--fs-3);
     color: var(--ink);
     letter-spacing: -0.02em;
+  }
+
+  /* Фотокарточка: снимок на весь фон, затемнение снизу, светлый текст */
+  .is-photo {
+    color: var(--on-dark);
+  }
+  .is-photo b {
+    color: #fff;
+  }
+  .is-photo :global(img.photo) {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 68% 45%;
+    transition: transform 0.8s var(--ease);
+  }
+  .is-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(2, 17, 12, 0.08) 20%, rgba(2, 17, 12, 0.86) 100%);
+  }
+  .is-photo:hover :global(img.photo) {
+    transform: scale(1.04);
   }
 
   /* Формы: градиент сайта + внутренняя тень, чтобы читались объёмно */
