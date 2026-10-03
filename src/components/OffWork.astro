@@ -1,16 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import { offwork } from '../data/site';
-import mountains from '../assets/photo/offwork-mountains.jpg';
 // Абстрактные формы для карточек: сфера, гора, кольцо, волна, капля, пилюля
 const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
 ---
 
 <section class="offwork section" id="offwork">
-  <!-- Фото секции: сильно размыто и приглушено кремовым слоем, чтобы не спорить с карточками -->
-  <div class="bg" aria-hidden="true" data-parallax="0.05">
-    <Image src={mountains} alt="" width={1600} format="webp" quality={60} loading="lazy" />
-  </div>
 
   <div class="container">
     <div class="section-head" data-reveal>
@@ -33,34 +27,7 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
 
 <style>
   .offwork {
-    position: relative;
-    overflow: hidden;
     background: var(--surface);
-    isolation: isolate;
-  }
-  .bg {
-    position: absolute;
-    inset: -12%;
-    z-index: -1;
-  }
-  .bg :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 40%;
-    filter: blur(11px) saturate(0.9);
-    transform: scale(1.08);
-  }
-  .bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(243, 235, 214, 0.78) 0%,
-      rgba(243, 235, 214, 0.46) 40%,
-      rgba(243, 235, 214, 0.6) 100%
-    );
   }
   .cards {
     list-style: none;
@@ -78,10 +45,7 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
     min-height: 210px;
     padding: 116px 24px 24px;
     border-radius: var(--r-card);
-    background: rgba(250, 245, 233, 0.86);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: var(--bg);
     color: var(--ink-2);
     line-height: 1.4;
     overflow: hidden;
@@ -131,7 +95,7 @@ const shapes = ['sphere', 'mountain', 'ring', 'wave', 'drop', 'pill'];
     box-shadow: none;
     border: 16px solid transparent;
     background:
-      linear-gradient(var(--surface), var(--surface)) padding-box,
+      linear-gradient(var(--bg), var(--bg)) padding-box,
       var(--grad) border-box;
     filter: drop-shadow(0 14px 18px rgba(2, 17, 12, 0.22));
   }
