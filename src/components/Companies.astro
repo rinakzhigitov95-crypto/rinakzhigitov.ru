@@ -15,8 +15,9 @@ const loop = [...companies, ...companies];
     <ul class="track" data-marquee>
       {
         loop.map((c, i) => (
-          <li aria-hidden={i >= companies.length ? 'true' : undefined}>
+          <li aria-hidden={i >= companies.length ? 'true' : undefined} class:list={{ 'has-caption': 'caption' in c }}>
             <img src={`/logos/${c.file}`} alt={c.name} title={c.name} loading="lazy" decoding="async" />
+            {'caption' in c && <span class="caption">{c.caption}</span>}
           </li>
         ))
       }
@@ -53,6 +54,20 @@ const loop = [...companies, ...companies];
   .track li:hover img {
     filter: none;
     opacity: 1;
+  }
+  .track li {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+  }
+  .has-caption img {
+    height: 44px;
+  }
+  .caption {
+    font-size: 0.75rem;
+    line-height: 1.2;
+    color: var(--ink-2);
+    white-space: nowrap;
   }
   @media (prefers-reduced-motion: reduce) {
     .marquee {

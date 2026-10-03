@@ -117,9 +117,9 @@ export const companies = [
   { name: 'Минобрнауки России', file: 'minobrnauki.svg' },
   { name: 'Мастерская управления «Сенеж»', file: 'senezh.svg' },
   { name: 'Центр знаний «Машук»', file: 'mashuk.svg' },
-  { name: 'Правительство Республики Саха (Якутия)', file: 'yakutia-gov.svg' },
-  { name: 'Министерство по делам молодёжи Республики Татарстан', file: 'minmol-tatarstan.svg' },
-  { name: 'Министерство молодёжной политики Омской области', file: 'minmol-omsk.svg' },
+  { name: 'Правительство Республики Саха (Якутия)', file: 'yakutia-gov.svg', caption: 'Правительство Якутии' },
+  { name: 'Министерство по делам молодёжи Республики Татарстан', file: 'minmol-tatarstan.svg', caption: 'Минмолодёжи Татарстана' },
+  { name: 'Министерство молодёжной политики Омской области', file: 'minmol-omsk.svg', caption: 'Минмолодёжи Омской области' },
 ];
 
 export const education = [
