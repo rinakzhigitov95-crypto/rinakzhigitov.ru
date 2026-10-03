@@ -18,8 +18,8 @@ import { facts } from '../data/site';
 <style>
   .facts {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 32px 24px;
     border-top: 1px solid var(--line);
     padding-block: 40px 96px;
   }
@@ -38,14 +38,10 @@ import { facts } from '../data/site';
     margin-bottom: 6px;
     font-variant-numeric: tabular-nums;
   }
-  @media (max-width: 860px) {
-    .facts {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
   @media (max-width: 480px) {
     .facts {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 16px;
     }
   }
 </style>

@@ -11,7 +11,7 @@ import { skills } from '../data/site';
     <div class="skill-list">
       {
         skills.map((s, i) => (
-          <details class="skill" data-reveal style={`--i:${i}`} open={i === 0}>
+          <details class="skill" data-reveal style={`--i:${i}`}>
             <summary>
               <span class="skill-title">{s.title}</span>
               <span class="skill-summary">{s.summary}</span>

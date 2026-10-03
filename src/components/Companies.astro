@@ -45,8 +45,9 @@ const loop = [...companies, ...companies];
     width: auto;
     max-width: 200px;
     object-fit: contain;
-    filter: grayscale(1) contrast(1.1);
-    opacity: 0.72;
+    /* все логотипы — одинаково тёмно-серые, цвет возвращается при наведении */
+    filter: grayscale(1) brightness(0.55) contrast(1.4);
+    opacity: 0.85;
     transition: filter 0.4s var(--ease), opacity 0.4s var(--ease);
   }
   .track li:hover img {

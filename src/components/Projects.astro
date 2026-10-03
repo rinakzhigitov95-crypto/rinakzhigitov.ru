@@ -5,8 +5,8 @@ import ProjectTile from './ProjectTile.astro';
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const top = projects.slice(0, 3);
-const rest = projects.slice(3);
+const VISIBLE = 5;
+const hiddenCount = projects.length - VISIBLE;
 ---
 
 <section class="projects" id="projects">
@@ -19,31 +19,56 @@ const rest = projects.slice(3);
       </p>
     </div>
 
-    <div class="tiles">
-      {top.map((p, i) => <ProjectTile project={p} index={i} />)}
-    </div>
-
-    <ol class="plist" aria-label="Остальные проекты">
+    <div class="tiles" data-tiles>
       {
-        rest.map((p, i) => (
-          <li data-reveal style={`--i:${i % 4}`}>
-            <a href={`/projects/${p.id}/`}>
-              <span class="p-metric">
-                <b>{p.data.metric}</b>
-                <span>{p.data.metricLabel}</span>
-              </span>
-              <span class="p-text">
-                <span class="p-title">{p.data.title}</span>
-                <span class="p-sub">{p.data.subtitle}</span>
-              </span>
-              <span class="p-company">{p.data.company}</span>
-            </a>
-          </li>
+        projects.map((p, i) => (
+          <div class:list={['tile-wrap', { 'is-hidden': i >= VISIBLE }]}>
+            <ProjectTile project={p} index={i} featured={i === 0} />
+          </div>
         ))
       }
-    </ol>
+    </div>
+
+    {
+      hiddenCount > 0 && (
+        <div class="more">
+          <button type="button" class="btn btn-more" data-more aria-expanded="false" aria-controls="projects">
+            <span data-more-label>Показать ещё {hiddenCount}</span>
+            <span class="more-icon" aria-hidden="true" />
+          </button>
+        </div>
+      )
+    }
   </div>
 </section>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-more]');
+  const label = document.querySelector<HTMLElement>('[data-more-label]');
+  const hidden = Array.from(document.querySelectorAll<HTMLElement>('.tile-wrap.is-hidden'));
+  if (btn && label && hidden.length) {
+    const total = hidden.length;
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      if (!open) {
+        hidden.forEach((el, i) => {
+          el.classList.remove('is-hidden');
+          const tile = el.firstElementChild as HTMLElement | null;
+          if (tile) {
+            tile.style.setProperty('--i', String(i % 3));
+            requestAnimationFrame(() => tile.classList.add('is-in'));
+          }
+        });
+        label.textContent = 'Свернуть';
+      } else {
+        hidden.forEach((el) => el.classList.add('is-hidden'));
+        label.textContent = `Показать ещё ${total}`;
+        document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+  }
+</script>
 
 <style>
   .projects {
@@ -66,97 +91,56 @@ const rest = projects.slice(3);
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
-
-  /* Список остальных проектов */
-  .plist {
-    list-style: none;
-    margin: 40px 0 0;
-    padding: 0;
-    border-top: 1px solid color-mix(in srgb, var(--on-dark) 18%, transparent);
+  .tile-wrap {
+    display: contents;
   }
-  .plist li {
-    border-bottom: 1px solid color-mix(in srgb, var(--on-dark) 18%, transparent);
+  .tile-wrap.is-hidden {
+    display: none;
   }
-  .plist a {
-    display: grid;
-    grid-template-columns: 220px 1fr auto;
-    gap: 16px 40px;
-    align-items: center;
-    padding: 22px 0;
+  .more {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .btn-more {
+    background: transparent;
     color: var(--on-dark);
-    text-decoration: none;
-    transition: padding 0.35s var(--ease);
+    border-color: color-mix(in srgb, var(--on-dark) 35%, transparent);
   }
-  .plist a:hover {
-    padding-left: 12px;
+  .btn-more:hover {
+    background: var(--on-dark);
+    color: var(--ink);
   }
-  .p-metric {
-    display: grid;
-    gap: 2px;
+  .more-icon {
+    position: relative;
+    width: 14px;
+    height: 14px;
   }
-  .p-metric b {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--fs-3);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    white-space: nowrap;
+  .more-icon::before,
+  .more-icon::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    width: 12px;
+    height: 1.5px;
+    background: currentColor;
+    transform: translate(-50%, -50%);
+    transition: transform 0.35s var(--ease);
   }
-  .p-metric span {
-    font-size: var(--fs-0);
-    color: var(--on-dark-2);
-    max-width: 26ch;
+  .more-icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
   }
-  .p-text {
-    display: grid;
-    gap: 4px;
-  }
-  .p-title {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: var(--fs-2);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    transition: color 0.3s var(--ease);
-  }
-  .plist a:hover .p-title {
-    color: var(--gold);
-  }
-  .p-sub {
-    color: var(--on-dark-2);
-    max-width: 60ch;
-  }
-  .p-company {
-    color: var(--on-dark-2);
-    font-size: var(--fs-0);
-    white-space: nowrap;
+  .btn-more[aria-expanded='true'] .more-icon::after {
+    transform: translate(-50%, -50%) rotate(0);
   }
   @media (max-width: 1024px) {
     .tiles {
       grid-template-columns: repeat(2, 1fr);
     }
-    .tiles > :global(.tile:first-child) {
-      grid-column: span 2;
-    }
-  }
-  @media (max-width: 760px) {
-    .plist a {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-    .p-company {
-      order: -1;
-    }
-    .p-metric {
-      order: 3;
-    }
   }
   @media (max-width: 640px) {
     .tiles {
       grid-template-columns: 1fr;
-    }
-    .tiles > :global(.tile:first-child) {
-      grid-column: auto;
     }
     .projects {
       border-radius: 28px 28px 0 0;

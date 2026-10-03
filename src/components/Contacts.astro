@@ -5,17 +5,12 @@ import { site } from '../data/site';
 <section class="contacts section" id="contacts">
   <div class="container contacts-inner" data-reveal>
     <div>
-      <h2>Обсудим задачу?</h2>
-      <p class="lead">
-        Продуктовая роль, консалтинг по клиентскому опыту или разовая консультация — напишите,
-        отвечаю в течение дня.
-      </p>
+      <h2>Связаться или обсудить проект</h2>
+      <p class="lead">Продуктовая роль, консалтинг, разовая консультация</p>
     </div>
     <div class="contact-actions">
       <a class="btn btn-primary" href={site.telegram} target="_blank" rel="noopener">Написать в Telegram</a>
       <a class="btn btn-ghost" href={`mailto:${site.email}`}>{site.email}</a>
-      <a class="link" href={site.setka} target="_blank" rel="noopener">Профиль в Сетке</a>
-      <a class="link" href={site.resume} target="_blank" rel="noopener">Скачать резюме (PDF)</a>
     </div>
   </div>
 </section>
@@ -28,6 +23,7 @@ import { site } from '../data/site';
   .contacts h2 {
     color: var(--on-dark);
     margin-bottom: 20px;
+    max-width: 14ch;
   }
   .contacts .lead {
     color: var(--on-dark-2);
@@ -61,17 +57,12 @@ import { site } from '../data/site';
     background: var(--on-dark);
     color: var(--ink);
   }
-  .link {
-    color: var(--on-dark-2);
-    font-size: var(--fs-0);
-    padding: 6px 0;
-  }
-  .link:hover {
-    color: var(--on-dark);
-  }
   @media (max-width: 860px) {
     .contacts-inner {
       grid-template-columns: 1fr;
+    }
+    .contacts h2 {
+      max-width: none;
     }
   }
 </style>
