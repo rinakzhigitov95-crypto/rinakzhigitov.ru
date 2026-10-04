@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Страница не найдена — Ринат Акжигитов" compactHeader>
+  <section class="container nf">
+    <p class="small">Ошибка 404</p>
+    <h1>Такой страницы нет</h1>
+    <p class="lead">Возможно, ссылка устарела. Всё нужное — на главной.</p>
+    <a class="btn btn-primary" href="/">На главную</a>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    min-height: 70vh;
+    display: grid;
+    align-content: center;
+    gap: 16px;
+    justify-items: start;
+    padding-top: 96px;
+  }
+</style>
