@@ -5,6 +5,7 @@ AddDefaultCharset UTF-8
 RewriteEngine On
 # http → https (кроме проверочных файлов Let's Encrypt)
 RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteRule ^ https://rinakzhigitov.ru%{REQUEST_URI} [R=301,L]
 # www → без www
