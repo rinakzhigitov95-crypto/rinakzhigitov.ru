@@ -17,8 +17,8 @@ import photo from '../assets/photo/hero.jpg';
 
   <div class="hero-photo" data-parallax="0.08">
     <div class="aura" aria-hidden="true"></div>
-    <div class="duo">
-      <Image src={photo} alt="Ринат Акжигитов" width={760} densities={[1, 2]} loading="eager" format="webp" quality={82} />
+    <div class="photo">
+      <Image src={photo} alt="Ринат Акжигитов" width={760} densities={[1, 2]} loading="eager" format="webp" quality={84} />
     </div>
   </div>
 </section>
@@ -56,7 +56,7 @@ import photo from '../assets/photo/hero.jpg';
     inset: 0 -10%;
     background: var(--grad);
     filter: blur(70px);
-    opacity: 0.3;
+    opacity: 0.22;
     border-radius: 50%;
     animation: breathe 16s ease-in-out infinite alternate;
   }
@@ -68,21 +68,18 @@ import photo from '../assets/photo/hero.jpg';
       transform: scale(1.06) rotate(8deg) translate(3%, -3%);
     }
   }
-  /* Дуотон: фон — градиент, фото отдаёт только светотень */
-  .duo {
+  .photo {
     position: relative;
     width: min(100%, 460px);
-    background: var(--grad);
     border-radius: var(--r-tile);
     overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(2, 17, 12, 0.35);
   }
-  .duo img {
+  .photo img {
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: bottom;
-    mix-blend-mode: luminosity;
-    filter: grayscale(1) contrast(1.05) brightness(1.05);
+    object-position: 50% 20%;
   }
   @media (max-width: 860px) {
     .hero {
@@ -93,7 +90,7 @@ import photo from '../assets/photo/hero.jpg';
     .hero-photo {
       order: -1;
     }
-    .duo {
+    .photo {
       width: min(100%, 340px);
     }
   }
