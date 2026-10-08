@@ -107,7 +107,7 @@ export const companies = [
   { name: 'Росатом', file: 'rosatom.svg' },
   { name: 'S7 Airlines', file: 's7.svg' },
   { name: 'Ростелеком', file: 'rostelecom.svg' },
-  { name: 'МЕДСИ', file: 'medsi.svg' },
+  { name: 'МЕДСИ', file: 'medsi.svg', caption: 'МЕДСИ' },
   { name: 'СМ-Клиника', file: 'sm-clinic.svg' },
   { name: 'MR Group', file: 'mr-group.png' },
   { name: 'ProductStar', file: 'productstar.svg' },

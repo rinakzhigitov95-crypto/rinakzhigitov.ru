@@ -101,21 +101,81 @@ window.addEventListener(
 );
 onFrame();
 
-/* 4. Лента логотипов: едет сама, ускоряется от прокрутки --------------- */
+/* 4. Лента логотипов: едет сама, ускоряется от прокрутки, под курсором — останавливается,
+      её можно тянуть мышью/пальцем и крутить колесом ------------------------------------ */
 const track = document.querySelector<HTMLElement>('[data-marquee]');
-if (track && !reduce) {
+const marquee = track?.parentElement as HTMLElement | null;
+if (track && marquee) {
   let x = 0;
   let boost = 0;
+  let paused = false;
+  let dragging = false;
+  let startX = 0;
+  let startOffset = 0;
   const base = 0.5; // px за кадр
   const half = () => track.scrollWidth / 2;
-  const step = () => {
-    boost += (Math.min(Math.abs(velocity), 40) * 0.12 - boost) * 0.08;
-    x -= base + boost;
-    if (-x >= half()) x += half();
-    track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0)`;
-    requestAnimationFrame(step);
+  const wrap = () => {
+    const h = half();
+    if (-x >= h) x += h;
+    if (x > 0) x -= h;
   };
-  requestAnimationFrame(step);
+  const render = () => {
+    wrap();
+    track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0)`;
+  };
+  if (!reduce) {
+    const step = () => {
+      if (!paused && !dragging) {
+        boost += (Math.min(Math.abs(velocity), 40) * 0.12 - boost) * 0.08;
+        x -= base + boost;
+        render();
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  // пауза под курсором
+  marquee.addEventListener('pointerenter', () => (paused = true));
+  marquee.addEventListener('pointerleave', () => {
+    paused = false;
+    dragging = false;
+    marquee.classList.remove('is-dragging');
+  });
+  // перетаскивание мышью и пальцем
+  marquee.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    startOffset = x;
+    marquee.setPointerCapture(e.pointerId);
+    marquee.classList.add('is-dragging');
+  });
+  marquee.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    x = startOffset + (e.clientX - startX);
+    render();
+  });
+  const endDrag = () => {
+    dragging = false;
+    marquee.classList.remove('is-dragging');
+  };
+  marquee.addEventListener('pointerup', endDrag);
+  marquee.addEventListener('pointercancel', endDrag);
+  // колесо мыши / трекпад: горизонтальный жест или колесо с Shift
+  marquee.addEventListener(
+    'wheel',
+    (e) => {
+      const dx = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.shiftKey ? e.deltaY : 0;
+      if (!dx) return;
+      e.preventDefault();
+      x -= dx;
+      render();
+    },
+    { passive: false },
+  );
+  // клик по логотипу после перетаскивания не должен срабатывать как клик
+  track.addEventListener('click', (e) => {
+    if (Math.abs(x - startOffset) > 4) e.preventDefault();
+  });
 }
 
 /* 5. Прогресс чтения на странице кейса -------------------------------- */
